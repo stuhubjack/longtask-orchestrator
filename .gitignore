@@ -1,0 +1,30 @@
+# 运行产物（长任务的产出目录，不应提交）
+work/
+_smoke_work/
+*.log
+agent.log
+findings.md
+state.json
+llm_req_dump.jsonl
+artifacts/
+
+# 密钥文件（绝不提交）
+.env
+.env.*
+*.key
+*.pem
+auth.json
+credentials*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
