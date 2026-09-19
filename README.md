@@ -5,6 +5,41 @@
 > 核心思路：把"单一超长上下文"换成"多角色分工 + 结构化交接"，
 > 用空间换记忆。
 
+<!-- 演示视频：放 Releases 附件，README 只放封面 + 链接（见 docs/DEMO.md） -->
+<div align="center">
+
+[![演示视频](docs/assets/demo-cover.png)](https://github.com/stuhubjack/longtask-orchestrator/releases/latest)
+
+**▶ 观看演示**（点击封面，或见 [Releases](https://github.com/stuhubjack/longtask-orchestrator/releases/latest)）
+
+</div>
+
+---
+
+## 项目背景
+
+本框架源自**个人在 SRC（安全应急响应中心）授权漏洞挖掘中的实际需求**。
+
+这类任务有几个特点，恰好踩中 LLM 的短板：
+
+- **链路长**——从信息收集到验证，一个任务几十轮交互是常态
+- **信息密度高**——中间会产生几百条观察记录，条条可能互相牵连
+- **不能丢线索**——早期一条被忽略的线索，往往是后面突破的关键
+
+用 LLM 辅助执行时，问题很快暴露：**对话一长，前面确认过的事实就开始丢失**，
+表现为重复劳动、前后矛盾、任务跑偏。
+
+为解决问题自主设计了编排架构；后来意识到**这与安全场景并无必然关系**，
+是通用的长任务工程问题，因此将领域相关内容剥离，抽象为通用框架并开源。
+
+> **关于领域剥离**：原实现面向授权安全测试场景，包含 20+ 领域角色提示词与
+> 30+ 领域技能包。开源版将这些抽象为 3 个通用能力模块，剥离全部实际目标信息、
+> 凭据与内部工作记录，并配套编写了发布前脱敏扫描工具（`scripts/sanitize_check.py`）。
+> 详见 [docs/DEMO.md](docs/DEMO.md)。
+
+**范围声明**：本框架是通用的任务编排基础设施，不含任何攻击性能力。
+使用者需自行确保在已获授权的范围内使用（见下方[使用须知](#使用须知)）。
+
 ---
 
 ## 它解决什么问题
@@ -77,14 +112,21 @@ python3 core/runner.py <task_file> [workdir] [model] [max_turns] [seed_file]
 │   └── evidence-contract/     证据分级、交付规范、可回放要求
 ├── docs/
 │   ├── architecture.md        架构设计与设计权衡
-│   └── pitfalls.md            踩坑记录（10 条实战教训）
+│   ├── pitfalls.md            踩坑记录（10 条实战教训）
+│   ├── DEMO.md                演示视频托管说明
+│   └── assets/
+│       └── demo-cover.png     演示封面（可替换为视频截图）
 ├── examples/
 │   ├── demo-task.md           示例任务书
 │   └── seed-example.md        续跑示例
 └── scripts/
     ├── smoke_test.py          端到端冒烟测试（mock LLM，无需 API key）
-    └── sanitize_check.py      发布前脱敏扫描
+    ├── sanitize_check.py      发布前脱敏扫描
+    └── make_cover.py          生成演示封面占位图
 ```
+
+**演示视频**：托管在 [Releases](https://github.com/stuhubjack/longtask-orchestrator/releases/latest)，
+不放仓库（避免 clone 变慢、仓库膨胀）。上传与替换方法见 [docs/DEMO.md](docs/DEMO.md)。
 
 ---
 

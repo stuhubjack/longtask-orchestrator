@@ -16,6 +16,15 @@ artifacts/
 auth.json
 credentials*
 
+# 演示素材：视频/大文件不进 git（放 Release 附件，见 docs/DEMO.md）
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.flv
+# 注意：docs/assets/ 下的封面图（png）需要提交，不在此列
+
 # Python
 __pycache__/
 *.py[cod]
